@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->close();
 
             // Create the reset link
-            $resetLink = "http://localhost/coll/Xpense-vault/reset.html?token=" . $token;
+            $resetLink = "http://localhost/ExpensesVault/reset.html?token=" . $token;
             error_log("Reset link generated: " . $resetLink);
 
             // Send the reset email using the sendEmail function
