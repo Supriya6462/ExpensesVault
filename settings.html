@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Xpense Vault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/logout-modal.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen font-['Inter'] bg-gradient-to-br from-blue-50 to-blue-100">
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-xl shadow-sm">
+      <div class="container mx-auto px-6 py-4">
+        <div class="flex justify-between items-center h-16">
+          <!-- Logo -->
+          <a href="dashboard.html" class="flex items-center -ml-4">
+            <img src="images/newlogo.png" alt="Logo" class="h-16" />
+          </a>
+
+            <!-- Right-side buttons -->
+            <div class="flex items-center space-x-6">
+              <a href="about.html" class="relative text-gray-700 hover:text-blue-600 font-medium after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-[2px] after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full">About Us</a>
+              <div class="relative">
+                <button id="profile-menu-button" class="w-10 h-10 rounded-full bg-blue-400 flex items-center justify-center text-white text-lg font-bold focus:outline-none">B</button>
+                <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-lg py-4 z-50">
+                  <div class="px-6 pb-2">
+                    <div class="font-semibold text-lg text-gray-900">Bhawesh Ganesh</div>
+                    <div class="text-gray-500 font-semibold text-sm truncate">bhaweshganesh57@g...</div>
+                  </div>
+                  <div class="border-t my-2"></div>
+                  <a href="settings.html" class="flex items-center px-6 py-2 text-gray-800 hover:bg-gray-50">
+                    <svg class="w-5 h-5 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 7.292m0 0a4 4 0 100-7.292m0 0V3m0 8.646V21m0 0a9 9 0 110-18 9 9 0 010 18z" /></svg>
+                    Settings
+                  </a>
+                  <a href="#" onclick="showLogoutModal()" class="flex items-center px-6 py-2 text-red-600 hover:bg-red-50 font-semibold">
+                    <svg class="w-5 h-5 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7" /></svg>
+                    Logout
+                  </a>
+                </div>
+              </div>
+              
+              <!-- Mobile Menu Button -->
+              <div class="md:hidden">
+                <button id="mobile-menu-button" class="p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none">
+                  <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="hidden md:hidden bg-white shadow-lg rounded-lg mt-2" id="mobile-menu">
+          <div class="px-2 pt-2 pb-3 space-y-1">
+            <a href="dashboard.html" class="block px-3 py-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-blue-50">
+              <div class="flex items-center">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                Dashboard
+              </div>
+            </a>
+            <a href="transactions.html" class="block px-3 py-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-blue-50">
+              <div class="flex items-center">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Transactions
+              </div>
+            </a>
+            <a href="Savinggoals.html" class="block px-3 py-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-blue-50">
+              <div class="flex items-center">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+                Set Goals
+              </div>
+            </a>
+            <a href="charts.html" class="block px-3 py-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-blue-50">
+              <div class="flex items-center">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                Charts
+              </div>
+            </a>
+          
+          </div>
+        </div>
+      </nav>
+  
+      <!-- Sidebar -->
+      <div id="sidebar" class="bg-white/80 backdrop-blur-md shadow-lg w-64 fixed h-[calc(100%-6rem)] top-24 transform transition-transform duration-300 md:translate-x-0 -translate-x-full z-20">
+        <div class="flex items-center justify-between p-4 border-b">
+          <h2 class="text-xl font-bold text-gray-800">Menu</h2>
+          <button id="sidebar-close-btn" class="text-gray-500 hover:text-gray-700 focus:outline-none md:hidden">
+            ✖
+          </button>
+        </div>
+        <nav class="mt-4">
+          <ul>
+            <li>
+              <a href="dashboard.html" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a href="transactions.html" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Transactions
+              </a>
+            </li>
+            <li>
+              <a href="Savinggoals.html" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                Set Goals
+              </a>
+            </li>
+            <li>
+              <a href="charts.html" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                Charts
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+    
+
+    <!-- Main Content Area -->
+    <div class="ml-0 md:ml-64 p-6 pt-28">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-3xl font-bold text-gray-800 mb-8">Settings</h1>
+            
+            <div id="messageAlert" class="hidden mb-6 p-4 rounded-xl transform transition-all duration-300">
+                <span id="messageText"></span>
+            </div>
+
+            <form id="profileForm" class="bg-white/80 backdrop-blur-md rounded-2xl shadow-lg p-8 space-y-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
+                <div class="space-y-2">
+                    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                    <input type="text" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-blue-300 bg-white/50 backdrop-blur-sm" id="name" name="name" required>
+                </div>
+
+                <div class="space-y-2">
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-blue-300 bg-white/50 backdrop-blur-sm" id="email" name="email" required>
+                </div>
+
+                <div class="pt-6 mt-6 border-t border-gray-200">
+                    <div class="flex items-center mb-6">
+                        <div class="p-2.5 bg-gradient-to-br from-blue-100 to-blue-50 rounded-full mr-3 shadow-inner">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                            </svg>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-800">Change Password</h4>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="space-y-2">
+                            <label for="current_password" class="block text-sm font-medium text-gray-700">Current Password</label>
+                            <input type="password" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-blue-300 bg-white/50 backdrop-blur-sm" id="current_password" name="current_password">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="new_password" class="block text-sm font-medium text-gray-700">New Password</label>
+                            <input type="password" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-blue-300 bg-white/50 backdrop-blur-sm" id="new_password" name="new_password" minlength="6">
+                            <p class="text-xs text-gray-500 mt-1">Leave blank to keep current password</p>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm New Password</label>
+                            <input type="password" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-blue-300 bg-white/50 backdrop-blur-sm" id="confirm_password" name="confirm_password">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-600 transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">
+                    Save Changes
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Form validation
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+
+        // Fetch user data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Try to get data from session first
+            fetch('settings.php?action=get_user_data')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('name').value = data.user.name;
+                        document.getElementById('email').value = data.user.email;
+                    } else {
+                        // If session data fails, try localStorage
+                        const userName = localStorage.getItem('user_name');
+                        const userEmail = localStorage.getItem('user_email');
+                        if (userName && userEmail) {
+                            document.getElementById('name').value = userName;
+                            document.getElementById('email').value = userEmail;
+                        } else {
+                            showMessage('Error loading user data. Please try logging in again.', 'error');
+                            setTimeout(() => {
+                                window.location.href = 'l.html';
+                            }, 2000);
+                        }
+                    }
+                })
+                .catch(error => {
+                    showMessage('Error fetching user data', 'error');
+                });
+        });
+
+        // Handle form submission
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            fetch('settings.php?action=update_profile', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update localStorage with new values
+                    localStorage.setItem('user_name', document.getElementById('name').value);
+                    localStorage.setItem('user_email', document.getElementById('email').value);
+                }
+                showMessage(data.message, data.success ? 'success' : 'error');
+            })
+            .catch(error => {
+                showMessage('Error updating profile', 'error');
+            });
+        });
+
+        // Function to show messages
+        function showMessage(message, type) {
+            const alert = document.getElementById('messageAlert');
+            const messageText = document.getElementById('messageText');
+            
+            alert.className = `block mb-6 p-4 rounded-xl transform transition-all duration-300 ${type === 'success' ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-red-100 text-red-700 border border-red-200'}`;
+            messageText.textContent = message;
+            alert.classList.remove('hidden');
+            
+            setTimeout(() => {
+                alert.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Profile dropdown toggle
+        const profileButton = document.getElementById('profile-menu-button');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        
+        profileButton.addEventListener('click', function(e) {
+          e.stopPropagation();
+          profileDropdown.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function(e) {
+          if (!profileDropdown.contains(e.target)) {
+            profileDropdown.classList.add('hidden');
+          }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', function(e) {
+          e.stopPropagation();
+          mobileMenu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function(e) {
+          if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+            mobileMenu.classList.add('hidden');
+          }
+        });
+    </script>
+
+    <script>
+      function showLogoutModal() {
+        document.getElementById('logoutModal').classList.remove('hidden');
+      }
+
+      function hideLogoutModal() {
+        document.getElementById('logoutModal').classList.add('hidden');
+      }
+
+      function processLogout() {
+        fetch('process_logout.php', {
+          method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            window.location.href = 'l.html';
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          window.location.href = 'l.html';
+        });
+      }
+    </script>
+    <!-- Logout Modal -->
+    <div id="logoutModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50 flex items-center justify-center">
+      <div class="relative bg-white rounded-lg shadow-xl p-8 max-w-md w-full mx-4 transform transition-all">
+        <div class="text-center">
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">Confirm Logout</h3>
+          <p class="text-gray-500 mb-6">Are you sure you want to log out?</p>
+          <div class="flex justify-center space-x-4">
+            <button onclick="hideLogoutModal()" class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 transition-all duration-200">
+              Cancel
+            </button>
+            <button onclick="processLogout()" class="px-6 py-2.5 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition-all duration-200">
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

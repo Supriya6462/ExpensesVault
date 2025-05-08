@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Xpense Vault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 flex items-center justify-center p-4 font-['Inter']">
+    <div class="w-full max-w-7xl flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16 p-4 lg:p-8">
+        <!-- Left Section - Preview -->
+        <div class="w-full lg:w-1/2 max-w-[500px] p-6 lg:p-8 flex items-center justify-center">
+            <img src="https://scontent.fktm17-1.fna.fbcdn.net/v/t1.15752-9/487299329_568674625602975_1946188339827404000_n.png?stp=dst-png_p480x480&_nc_cat=107&ccb=1-7&_nc_sid=0024fc&_nc_ohc=56NHblmCaGIQ7kNvwGRbn8u&_nc_oc=AdlbtUHQEUVCXxc6gfd0yEM5LhAoxrHw5iHKpBPkMJp87YhoIN3wWciM0mRSOL2pS6IZyuv0HxPTGZWM6tv2atLL&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fktm17-1.fna&oh=03_Q7cD2AFrHAVztR1NHdPPN4iUAGHN4OJqm7N-1rBW9VOTHirL9w&oe=681845E1" alt="Expense Categories" class="w-full max-w-[450px] rounded-3xl shadow-lg transition-all duration-300 hover:scale-105">
+        </div>
+
+        <!-- Right Section - Login Form -->
+        <div class="w-full lg:w-1/2 max-w-[500px]">
+            <div class="bg-white/80 backdrop-blur-xl p-6 lg:p-10 rounded-3xl shadow-lg w-full transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <div class="text-center mb-8">
+                    <img src="images/newlogo.png" alt="Xpense Vault Logo" class="w-36 h-36 lg:w-40 lg:h-40 object-contain mx-auto mb-4 transition-all duration-200">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2 hover:text-blue-600 transition-colors duration-200">
+                    <p class="text-gray-600 text-sm hover:text-blue-500 transition-colors duration-200">Smart financial tracking for your future</p>
+                </div>
+
+                <h3 class="text-xl font-semibold text-gray-800 mb-6">Welcome Back! 👋</h3>
+
+                <div class="relative mb-5">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-xl pointer-events-none transition-colors duration-300">✉️</span>
+                    <input type="email" id="loginEmail" placeholder="Email Address" oninput="validateLoginForm()" 
+                        class="w-full pl-12 pr-4 py-4 bg-white/90 border border-gray-200 rounded-2xl text-gray-800 text-[0.95rem] transition-all duration-300 hover:border-blue-300 hover:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 focus:outline-none">
+                </div>
+
+                <div class="relative mb-5">
+                    <div class="relative">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-xl pointer-events-none transition-colors duration-300">🔒</span>
+                        <input type="password" id="loginPassword" placeholder="Password" oninput="validateLoginForm()"
+                            class="w-full pl-12 pr-12 py-4 bg-white/90 border border-gray-200 rounded-2xl text-gray-800 text-[0.95rem] transition-all duration-300 hover:border-blue-300 hover:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-100 focus:outline-none">
+                        <button type="button" onclick="togglePasswordVisibility('loginPassword', 'toggleLoginPassword')" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-500 transition-colors duration-200">
+                            <span id="toggleLoginPassword">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                                </svg>
+                            </span>
+                        </button>
+                    </div>
+                    <div id="passwordFeedback" class="text-red-500 text-sm mt-1" style="display: none;"></div>
+                </div>
+
+                <div class="flex justify-between items-center mb-6 text-gray-500 text-[0.95rem]">
+                    <label class="flex items-center gap-2 cursor-pointer hover:text-blue-500 transition-colors duration-300">
+                        
+                    </label>
+                    <a href="#" onclick="showForgotPassword()" class="text-blue-500 font-semibold px-3 py-1.5 rounded-xl hover:bg-blue-50 hover:text-blue-600 transition-all duration-300">Forget Password?</a>
+                </div>
+
+                <div id="forgotPasswordForm" class="hidden">
+                    <input type="email" id="resetEmail" placeholder="Enter your email" class="w-full px-4 py-3 rounded-xl border border-gray-200 mb-4" />
+                    <button onclick="sendResetLink()" class="w-full bg-blue-500 text-white py-3 rounded-xl hover:bg-blue-600 transition-colors duration-300">Send Reset Link</button>
+                </div>
+
+                <button type="button" id="loginBtn" onclick="loginUser()" class="w-full py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl font-semibold text-base cursor-pointer transition-all duration-300 mt-6 relative overflow-hidden hover:-translate-y-0.5 hover:shadow-lg disabled:from-gray-400 disabled:to-gray-300 disabled:cursor-not-allowed">
+                    Sign In
+                </button>
+
+                <div class="text-center mt-4 text-gray-500 text-[0.95rem]">
+                    Don't have an account? <a href="s.html" class="text-blue-500 font-semibold px-2 py-1 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-all duration-300">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validateLoginForm() {
+            let email = document.getElementById("loginEmail").value.trim();
+            let password = document.getElementById("loginPassword").value;
+            let loginBtn = document.getElementById("loginBtn");
+            let passwordFeedback = document.getElementById("passwordFeedback");
+    
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let isValidEmail = emailPattern.test(email);
+            
+            // Password validation patterns
+            let hasNumber = /\d/.test(password);
+            let hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+            let isLongEnough = password.length >= 6;
+            
+            let isPasswordValid = hasNumber && hasSpecial && isLongEnough;
+            
+            
+            loginBtn.disabled = !(isValidEmail && isPasswordValid);
+        }
+    
+        function loginUser() {
+            let email = document.getElementById("loginEmail").value;
+            let password = document.getElementById("loginPassword").value;
+    
+            fetch("login.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    // Store user data in localStorage
+                    if (data.user) {
+                        localStorage.setItem('user_name', data.user.name);
+                        localStorage.setItem('user_email', data.user.email);
+                    }
+                    // Show alert and redirect after OK is clicked
+                    alert("Login successful! Welcome to Xpense Vault.");
+                    window.location.href = "dashboard.html";
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred during login. Please try again.");
+            });
+        }
+    
+        function redirectToSignup() {
+            window.location.href = "s.html";
+        }
+    
+        function showForgotPassword() {
+            document.getElementById("forgotPasswordForm").style.display = "block";
+        }
+    
+        function sendResetLink() {
+            let email = document.getElementById("resetEmail").value.trim();
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+            if (!email.match(emailPattern)) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+    
+            fetch("forget_password.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `email=${encodeURIComponent(email)}`
+            })
+            .then(response => response.text()) // Get text response first
+            .then(data => {
+                console.log("Raw Response:", data); // Debugging
+                try {
+                    let json = JSON.parse(data);
+                    alert(json.message);
+                    if (json.status === "success") {
+                        document.getElementById("forgotPasswordForm").style.display = "none";
+                    }
+                } catch (error) {
+                    console.error("Invalid JSON:", data);
+                    alert("An unexpected error occurred. Please try again.");
+                }
+            })
+            .catch(error => {
+                console.error("Fetch Error:", error);
+                alert("Something went wrong. Please try again.");
+            });
+        }
+    
+        document.addEventListener("DOMContentLoaded", function() {
+            validateLoginForm();
+        });
+    </script>
+    <script>
+        function togglePasswordVisibility(inputId, toggleId) {
+            const input = document.getElementById(inputId);
+            const toggle = document.getElementById(toggleId);
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                toggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>';
+            } else {
+                input.type = 'password';
+                toggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" /></svg>';
+            }
+        }
+    </script>
+</body>
+</html>
