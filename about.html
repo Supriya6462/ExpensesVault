@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Xpense Vault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #3B82F6, #6366F1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradient 5s ease infinite;
+        }
+       
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .nav-item {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(135deg, #3B82F6, #6366F1);
+            transition: width 0.3s ease;
+        }
+        .nav-item:hover::after {
+            width: 100%;
+        }
+        .slide-in-left {
+            animation: slideInLeft 0.8s ease-out forwards;
+            opacity: 0;
+        }
+        .slide-in-right {
+            animation: slideInRight 0.8s ease-out forwards;
+            opacity: 0;
+        }
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .card-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        .card-glow::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
+            animation: glowSweep 3s linear infinite;
+            opacity: 0;
+        }
+        @keyframes glowSweep {
+            0% {
+                transform: rotate(45deg) translateY(-100%);
+                opacity: 0;
+            }
+            30% {
+                opacity: 0.3;
+            }
+            70% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: rotate(45deg) translateY(100%);
+                opacity: 0;
+            }
+        }
+    </style>
+    <style>
+       
+        
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(to right, #3B82F6, #4F46E5);
+            padding: 2px;
+            border-radius: 1.5rem
+        }
+
+        .gradient-border > div {
+            background: white;
+            border-radius: 1.4rem;
+        }
+
+        .scale-up-center {
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+
+        .scale-up-center:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-50 font-['Inter']">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-xl z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-2">
+            <div class="flex items-center justify-between">
+                <a href="landing.html" class="flex items-center hover-lift">
+                    <img src="images/newlogo.png" alt="Xpense Vault Logo" class="h-14 animate-float">
+                    <span class="sr-only">Xpense Vault</span>
+                </a>
+                <a href="landing.html" class="nav-item text-blue-600 font-medium">Back to Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-28 pb-20">
+        <div class="container mx-auto px-6">
+            <!-- Who We Are -->
+            <section class="max-w-4xl mx-auto mb-20 hover-lift bg-white/80 backdrop-blur-xl p-10 rounded-3xl card-glow slide-in-left" style="animation-delay: 0.3s">
+                <div class="relative overflow-hidden">
+                    <h1 class="text-5xl font-bold mb-8 gradient-text">Who We Are</h1>
+                    <p class="text-gray-600 leading-relaxed text-lg fade-in-up" style="animation-delay: 0.6s">
+                        At Xpense Vault, we're a team of creators, developers, and finance nerds on a mission to make personal money management simple, smart, and stress-free. We believe everyone deserves clarity and control over their finances — without needing a degree in accounting.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Our Mission -->
+            <section class="max-w-4xl mx-auto mb-20 hover-lift bg-white/80 backdrop-blur-xl p-10 rounded-3xl card-glow slide-in-right" style="animation-delay: 0.6s">
+                <div class="relative overflow-hidden">
+                    <h2 class="text-5xl font-bold mb-8 gradient-text">Our Mission</h2>
+                    <p class="text-gray-600 leading-relaxed text-lg fade-in-up" style="animation-delay: 0.9s">
+                        Managing your money shouldn't be complicated. Our mission is to empower individuals and small businesses to track their expenses, set budgets, and understand their financial habits — all through a clean, intuitive platform.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Why We Built This -->
+            <section class="max-w-4xl mx-auto mb-20 hover-lift bg-white/80 backdrop-blur-xl p-10 rounded-3xl">
+                <h2 class="text-3xl font-bold mb-6 gradient-text">Why We Built This</h2>
+                <p class="text-gray-600 leading-relaxed text-lg mb-6">
+                    Like many people, we struggled with keeping track of daily spending, managing receipts, or sticking to budgets. Existing tools were either too complex or too basic. That frustration sparked an idea: what if expense tracking could be automatic, insightful, and actually enjoyable?
+                </p>
+                <p class="text-gray-600 leading-relaxed text-lg">
+                    So, we built Xpense Vault — a modern tool that fits seamlessly into your lifestyle, not the other way around.
+                </p>
+            </section>
+
+            <!-- What Makes Us Different -->
+            <section class="max-w-4xl mx-auto mb-20">
+                <h2 class="text-3xl font-bold mb-8 gradient-text text-center">What Makes Us Different</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl hover-lift">
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Simple Interface</h3>
+                        <p class="text-gray-600">Simple, distraction-free interface that works on web and mobile.</p>
+                    </div>
+                    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl hover-lift">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Smart Categorization</h3>
+                        <p class="text-gray-600">Smart categorization to help you see exactly where your money goes.</p>
+                    </div>
+                    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl hover-lift">
+                        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Privacy First</h3>
+                        <p class="text-gray-600">Privacy-first approach — your data stays secure, always.</p>
+                    </div>
+                    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl hover-lift">
+                        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Built-in Insights</h3>
+                        <p class="text-gray-600">Built-in insights and reports to help you plan better, not just track more.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Your Privacy Matters -->
+            <section class="max-w-4xl mx-auto mb-20 hover-lift bg-white/80 backdrop-blur-xl p-10 rounded-3xl">
+                <h2 class="text-3xl font-bold mb-6 gradient-text">Your Privacy Matters</h2>
+                <p class="text-gray-600 leading-relaxed text-lg">
+                    Your financial data is personal. That's why we use bank-level encryption, never sell your information, and give you full control over your account. We're committed to building not just a great app, but one you can truly trust.
+                </p>
+            </section>
+
+            <!-- Join Us -->
+            <section class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-6 gradient-text">Join Us on This Journey</h2>
+                <p class="text-gray-600 leading-relaxed text-lg mb-8">
+                    Thousands of users have already started taking control of their finances with Xpense Vault. Are you ready to master your money?
+                </p>
+                <div class="flex justify-center gap-4">
+                    <a href="s.html" class="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover-lift inline-block font-medium">Sign up now</a>
+                    <a href="#" class="px-8 py-4 bg-white text-blue-600 rounded-xl hover-lift inline-block font-medium border-2 border-blue-600">Learn more</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-20">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-3 mb-6">
+                <img src="images/newlogo.png" alt="Logo" class="w-25 h-20 rounded-lg">
+               
+            </div>
+            <p class="text-gray-400 mb-6">Smart financial tracking for your future</p>
+            <div class="flex flex-wrap justify-center gap-4 md:gap-6 text-sm text-gray-400 px-4">
+                <a href="#" class="hover:text-white transition-colors duration-200">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition-colors duration-200">Terms of Service</a>
+              
+            </div>
+            <div class="text-gray-400 text-sm mt-8 space-y-2 px-4 md:px-0">
+                <p><span class="mr-2">📧</span><a href="mailto:bhaweshganesh57@gmail.com" class="hover:text-white transition-colors duration-200">bhaweshganesh57@gmail.com</a></p>
+                <p><span class="mr-2">📞</span><a href="tel:+18001234567" class="hover:text-white transition-colors duration-200">+1 (800) 123-4567</a></p>
+                <p><span class="mr-2">📍</span>Naxal Bhagawati Marga, Kathmandu, Nepal</p>
+                <a href="#" class="text-white font-bold hover:text-white transition-colors duration-200">Contact Us</a>
+            </div>
+            <p class="text-gray-500 text-sm mt-8">&copy; 2024 Xpense Vault. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
