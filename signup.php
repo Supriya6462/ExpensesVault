@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['reset_token'] = $reset_token;
 
         // Generate verification link - Fixed URL
-        $verification_link = "http://localhost/collab3/Xpense-vault/verify.php?token=" . $reset_token;
+        $verification_link = "http://localhost/ExpensesVault/verify.php?token=" . $reset_token;
         error_log("Verification link generated: " . $verification_link);
         
         // Prepare email content

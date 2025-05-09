@@ -1,55 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Charts - Xpense Vault</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="js/logout-modal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="charts.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body class="min-h-screen font-['Inter'] bg-gradient-to-br from-blue-50 to-blue-100">
-    <!-- Navigation Bar -->
-    <nav class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-lg">
-      <div class="max-w-7xl mx-auto px-4">
-        <div class="flex justify-between items-center h-24">
-          <div class="flex items-center -ml-6">
-            <img class="h-24 w-24 object-contain" src="images/logo.png" alt="Xpense Vault Logo" />
-          </div>
-          
-          <div class="hidden md:flex space-x-8">
-            <a href="dashboard.html" class="relative text-gray-700 hover:text-blue-600 font-medium after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-[2px] after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full">Dashboard</a>
-            <a href="transactions.html" class="relative text-gray-700 hover:text-blue-600 font-medium after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-[2px] after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full">Transactions</a>
-            <a href="Savinggoals.html" class="relative text-gray-700 hover:text-blue-600 font-medium after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-[2px] after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full">Set Goals</a>
-            <a href="charts.html" class="relative text-blue-600 font-medium after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-full after:h-[2px] after:bg-blue-500">Charts</a>
-            <a href="settings.html" class="relative text-gray-700 hover:text-blue-600 font-medium after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-[2px] after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full">Settings</a>
-          </div>
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-xl shadow-sm">
+      <div class="container mx-auto px-6 py-4">
+        <div class="flex justify-between items-center h-16">
+          <!-- Logo -->
+          <a href="dashboard.html" class="flex items-center -ml-4">
+            <img src="images/newlogo.png" alt="Xpense Vault Logo" class="h-16" />
+          </a>
 
-          <div class="md:hidden">
-            <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 focus:outline-none">
-              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
+          <!-- Right-side buttons -->
+          <div class="flex items-center space-x-6">
+            <a href="about.html" class="relative text-gray-700 hover:text-blue-600 font-medium after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-[2px] after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full">About Us</a>
+            <div class="relative">
+              <button id="profile-menu-button" class="w-10 h-10 rounded-full bg-blue-400 flex items-center justify-center text-white text-lg font-bold focus:outline-none">B</button>
+              <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-lg py-4 z-50">
+                <div class="px-6 pb-2">
+                  <div class="font-semibold text-lg text-gray-900">Bhawesh Ganesh</div>
+                  <div class="text-gray-500 font-semibold text-sm truncate">bhaweshganesh57@g...</div>
+                </div>
+                <div class="border-t my-2"></div>
+                <a href="settings.html" class="flex items-center px-6 py-2 text-gray-800 hover:bg-gray-50">
+                  <svg class="w-5 h-5 mr-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 7.292m0 0a4 4 0 100-7.292m0 0V3m0 8.646V21m0 0a9 9 0 110-18 9 9 0 010 18z" /></svg>
+                  Settings
+                </a>
+                <a href="#" onclick="showLogoutModal()" class="flex items-center px-6 py-2 text-red-600 hover:bg-red-50 font-semibold">
+                  <svg class="w-5 h-5 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7" /></svg>
+                  Logout
+                </a>
+              </div>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+              <button id="mobile-menu-button" class="p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Mobile Menu -->
-      <div class="md:hidden" id="mobile-menu" style="display: none">
-        <div class="px-2 pt-2 pb-3 space-y-1">
-          <a href="dashboard.html" class="block px-3 py-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-blue-50">Dashboard</a>
-          <a href="transactions.html" class="block px-3 py-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-blue-50">Transactions</a>
-          <a href="Savinggoals.html" class="block px-3 py-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-blue-50">Set Goals</a>
-          <a href="charts.html" class="block px-3 py-2 rounded-md text-blue-600 bg-blue-50">Charts</a>
-          <a href="settings.html" class="block px-3 py-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-blue-50">Settings</a>
-          <a href="#" onclick="showLogoutModal()" class="block px-3 py-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-blue-50">Logout</a>
+        <!-- Mobile Menu -->
+        <div class="hidden md:hidden bg-white shadow-lg rounded-lg mt-2" id="mobile-menu">
+          <div class="px-2 pt-2 pb-3 space-y-1">
+            <a href="dashboard.html" class="block px-3 py-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-blue-50">
+              <div class="flex items-center">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                Dashboard
+              </div>
+            </a>
+            <a href="transactions.html" class="block px-3 py-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-blue-50">
+              <div class="flex items-center">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Transactions
+              </div>
+            </a>
+            <a href="Savinggoals.html" class="block px-3 py-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-blue-50">
+              <div class="flex items-center">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                Set Goals
+              </div>
+            </a>
+            <a href="charts.html" class="block px-3 py-2 rounded-md text-blue-600 bg-blue-50">
+              <div class="flex items-center">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                Charts
+              </div>
+            </a>
+          </div>
         </div>
       </div>
     </nav>
 
-    <!-- Sidebar -->
+    <!-- SIDEBAR -->
     <div id="sidebar" class="bg-white/80 backdrop-blur-md shadow-lg w-64 fixed h-[calc(100%-6rem)] top-24 transform transition-transform duration-300 md:translate-x-0 -translate-x-full z-20">
       <div class="flex items-center justify-between p-4 border-b">
         <h2 class="text-xl font-bold text-gray-800">Menu</h2>
@@ -92,21 +136,7 @@
             </a>
           </li>
           <li>
-            <a href="settings.html" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              Settings
-            </a>
-          </li>
-          <li>
-            <a href="#" onclick="showLogoutModal()" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
-              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-              </svg>
-              Logout
-            </a>
+           
           </li>
         </ul>
       </nav>
@@ -174,9 +204,50 @@
       </div>
     </div>
 
-    <script src="jsfile/charts.js"></script>
+    <script type="module" src="./charts.js"></script>
 
+    <!-- JavaScript for Dropdowns and Mobile Menu -->
     <script>
+      // Profile Dropdown Toggle
+      const profileButton = document.getElementById('profile-menu-button');
+      const profileDropdown = document.getElementById('profile-dropdown');
+
+      profileButton.addEventListener('click', function() {
+        profileDropdown.classList.toggle('hidden');
+      });
+
+      // Close profile dropdown when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!profileDropdown.contains(e.target) && !profileButton.contains(e.target)) {
+          profileDropdown.classList.add('hidden');
+        }
+      });
+
+      // Mobile Menu Toggle
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+      const sidebar = document.getElementById('sidebar');
+
+      mobileMenuButton.addEventListener('click', function() {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      // Close mobile menu when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+          mobileMenu.classList.add('hidden');
+        }
+      });
+
+      // Close mobile menu when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+          mobileMenu.classList.add('hidden');
+        }
+      });
+
+      // Logout Modal Functions
       function showLogoutModal() {
         document.getElementById('logoutModal').classList.remove('hidden');
       }

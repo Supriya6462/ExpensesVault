@@ -14,7 +14,7 @@ require 'db_setup.php';
 <body class="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 flex items-center justify-center font-['Inter']">
 
 <div class="bg-white/90 backdrop-blur-lg p-10 rounded-3xl shadow-2xl text-center max-w-md mx-auto">
-    <img src="images/logo.png" alt="Xpense Vault Logo" class="w-24 h-24 object-cover rounded-2xl mx-auto mb-6 transition-transform hover:scale-110 hover:rotate-2">
+    <img src="images/newlogo.png" alt="Xpense Vault Logo" class="w-24 h-24 object-contain rounded-2xl mx-auto mb-6 transition-transform hover:scale-105">
     <?php
     if (isset($_GET['token'])) {
         $token = mysqli_real_escape_string($conn, $_GET['token']);
