@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Saving Goals – Expense Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="logout-modal.js"></script>
+    <script src="js/logout-modal.js"></script>
+    <script src="js/profile.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
@@ -26,11 +27,11 @@
           <div class="flex items-center space-x-6">
             <a href="about.html" class="relative text-gray-700 hover:text-blue-600 font-medium after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-[2px] after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full">About Us</a>
             <div class="relative">
-              <button id="profile-menu-button" class="w-10 h-10 rounded-full bg-blue-400 flex items-center justify-center text-white text-lg font-bold focus:outline-none">B</button>
+              <button id="profile-menu-button" class="w-10 h-10 rounded-full bg-blue-400 flex items-center justify-center text-white text-lg font-bold focus:outline-none"></button>
               <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-lg py-4 z-50">
                 <div class="px-6 pb-2">
-                  <div class="font-semibold text-lg text-gray-900">Bhawesh Ganesh</div>
-                  <div class="text-gray-500 font-semibold text-sm truncate">bhaweshganesh57@g...</div>
+                  <div class="font-semibold text-lg text-gray-900"></div>
+                  <div class="text-gray-500 font-semibold text-sm truncate"></div>
                 </div>
                 <div class="border-t my-2"></div>
                 <a href="settings.html" class="flex items-center px-6 py-2 text-gray-800 hover:bg-gray-50">
@@ -262,21 +263,6 @@
 
     <script src="goals.js"></script>
     <script>
-      // Profile dropdown toggle
-      const profileButton = document.getElementById('profile-menu-button');
-      const profileDropdown = document.getElementById('profile-dropdown');
-      
-      profileButton.addEventListener('click', function(e) {
-        e.stopPropagation();
-        profileDropdown.classList.toggle('hidden');
-      });
-
-      document.addEventListener('click', function(e) {
-        if (!profileDropdown.contains(e.target)) {
-          profileDropdown.classList.add('hidden');
-        }
-      });
-
       // Mobile Menu Toggle
       const mobileMenuButton = document.getElementById('mobile-menu-button');
       const mobileMenu = document.getElementById('mobile-menu');
