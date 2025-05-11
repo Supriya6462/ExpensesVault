@@ -74,12 +74,15 @@ document.addEventListener("DOMContentLoaded", function () {
             // Add saving transactions from saving goals
             if (savingData.success && savingData.goals) {
                 savingData.goals.forEach(goal => {
-                    transactions.push({
-                        date: goal.deadline,
-                        amount: goal.saved,
-                        type: "Saving",
-                        expenseType: goal.goal_name
-                    });
+                    if (goal.saved > 0) {  // Only add if there are savings
+                        transactions.push({
+                            date: goal.deadline,
+                            amount: goal.saved,
+                            type: "Saving",
+                            expenseType: goal.goal_name,
+                            description: `Savings for ${goal.goal_name}`
+                        });
+                    }
                 });
             }
             filteredTransactions = [...transactions];
@@ -132,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const ctx = document.getElementById("timeSeriesChart").getContext("2d");
         
         // Sort transactions by date
-        const sortedTransactions = [...filteredTransactions].sort((a, b) => new Date(a.date) - new Date(b.date));
+        const sortedTransactions = [...transactions].sort((a, b) => new Date(a.date) - new Date(b.date));
         
         // Prepare data for cumulative spending
         let cumulativeBalance = 0;
@@ -143,8 +146,10 @@ document.addEventListener("DOMContentLoaded", function () {
             const amount = parseFloat(tx.amount);
             if (tx.type === "Income") {
                 cumulativeBalance += amount;
-            } else {
+            } else if (tx.type === "Expense") {
                 cumulativeBalance -= amount;
+            } else if (tx.type === "Saving") {
+                cumulativeBalance += amount;  // Add savings to balance
             }
             
             dates.push(tx.date);
@@ -215,7 +220,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function renderMonthlyChart() {
         const ctx = document.getElementById("monthlyChart").getContext("2d");
         
-        // Group by month
+        // Group by month using filtered transactions
         const monthlyData = {};
         filteredTransactions.forEach(tx => {
             const date = new Date(tx.date);
@@ -306,10 +311,13 @@ document.addEventListener("DOMContentLoaded", function () {
     function renderCategoryChart() {
         const ctx = document.getElementById("categoryChart").getContext("2d");
         
-        // Group by category
+        // Group by category using filtered transactions
         const categoryData = {};
         filteredTransactions.forEach(tx => {
             if (tx.type === "Expense") {
+                const category = tx.expenseType || "Uncategorized";
+                categoryData[category] = (categoryData[category] || 0) + parseFloat(tx.amount);
+            } else if (tx.type === "Saving") {
                 const category = tx.expenseType || "Uncategorized";
                 categoryData[category] = (categoryData[category] || 0) + parseFloat(tx.amount);
             }
