@@ -57,28 +57,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Fetch transactions from API
     function fetchTransactions() {
-        fetch("api.php")
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
+        Promise.all([
+            fetch("api.php"),
+            fetch("Savinggoal.php?action=get")
+        ])
+        .then(responses => Promise.all(responses.map(r => r.json())))
+        .then(([transactionsData, savingData]) => {
+            if (transactionsData.error) {
+                console.error("API Error:", transactionsData.error);
+                if (transactionsData.error === "unauthorized") {
+                    window.location.href = "l.html";
                 }
-                return response.json();
-            })
-            .then(data => {
-                if (data.error) {
-                    console.error("API Error:", data.error);
-                    if (data.error === "unauthorized") {
-                        window.location.href = "l.html";
-                    }
-                    return;
-                }
-                transactions = data;
-                filteredTransactions = [...transactions];
-                renderCharts();
-            })
-            .catch(error => {
-                console.error("Error fetching transactions:", error);
-            });
+                return;
+            }
+            transactions = transactionsData;
+            // Add saving transactions from saving goals
+            if (savingData.success && savingData.goals) {
+                savingData.goals.forEach(goal => {
+                    transactions.push({
+                        date: goal.deadline,
+                        amount: goal.saved,
+                        type: "Saving",
+                        expenseType: goal.goal_name
+                    });
+                });
+            }
+            filteredTransactions = [...transactions];
+            renderCharts();
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
+        });
     }
 
     // Apply filters
@@ -115,6 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
         renderTimeSeriesChart();
         renderMonthlyChart();
         renderCategoryChart();
+        renderSavingGoalsChart();
     }
 
     // Time series chart
@@ -339,6 +349,80 @@ document.addEventListener("DOMContentLoaded", function () {
                                 const percentage = Math.round((value / total) * 100);
                                 return `${context.label}: Rs.${value.toFixed(2)} (${percentage}%)`;
                             }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Saving Goals Chart
+    function renderSavingGoalsChart() {
+        const ctx = document.getElementById("savingGoalsChart").getContext("2d");
+        
+        // Filter only saving transactions
+        const savingTransactions = filteredTransactions.filter(tx => tx.type === "Saving");
+        
+        // Group by goal name
+        const goalData = {};
+        savingTransactions.forEach(tx => {
+            const goalName = tx.expenseType;
+            if (!goalData[goalName]) {
+                goalData[goalName] = {
+                    saved: 0,
+                    target: 0
+                };
+            }
+            goalData[goalName].saved += parseFloat(tx.amount);
+        });
+
+        const labels = Object.keys(goalData);
+        const savedData = labels.map(goal => goalData[goal].saved);
+
+        if (savingGoalsChart) savingGoalsChart.destroy();
+
+        savingGoalsChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Amount Saved",
+                    data: savedData,
+                    backgroundColor: "#2196F3",
+                    borderColor: "#1976D2",
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `Saved: Rs.${context.raw.toFixed(2)}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: "Amount (Rs.)"
+                        },
+                        grid: {
+                            color: "rgba(0, 0, 0, 0.05)"
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Saving Goal"
+                        },
+                        grid: {
+                            display: false
                         }
                     }
                 }
