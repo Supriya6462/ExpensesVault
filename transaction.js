@@ -84,15 +84,39 @@ if (expenseTypeSelect && expenseCustomType) {
   });
 }
 
+  // Add helper function to reset form
+  function resetForm() {
+    document.getElementById("amount").value = "";
+    document.getElementById("date").value = "";
+    document.getElementById("expense-type").value = "Rent";
+    document.getElementById("expense-custom-type").value = "";
+    document.getElementById("income-type").value = "Salary";
+    document.getElementById("income-custom-type").value = "";
+    document.getElementById("type").value = "Choose Category";
+    
+    // Hide both type fields
+    incomeTypeDiv.classList.add("hidden");
+    expenseTypeDiv.classList.add("hidden");
+    incomeCustomType.classList.add("hidden");
+    expenseCustomType.classList.add("hidden");
+  }
+
   // Add Transaction
   const addTransactionBtn = document.getElementById("add-transaction-btn");
   if (addTransactionBtn) {
-    addTransactionBtn.addEventListener("click", (e) => {
+    addTransactionBtn.addEventListener("click", async (e) => {
       e.preventDefault();
       const type = document.getElementById("type").value;
-      const amount = document.getElementById("amount").value;
+      const amount = parseFloat(document.getElementById("amount").value);
       const date = document.getElementById("date").value;
       
+      // Validate amount
+      if (!amount || amount <= 0) {
+        alert("Please enter a valid positive amount");
+        resetForm();
+        return;
+      }
+
       // Get the appropriate type value based on category
       let typeValue;
       if (type === "Income") {
@@ -101,29 +125,47 @@ if (expenseTypeSelect && expenseCustomType) {
           typeValue = document.getElementById("income-custom-type").value;
           if (!typeValue) {
             alert("Please enter a custom income type");
+            resetForm();
             return;
           }
         } else {
           typeValue = incomeType;
         }
       } else if (type === "Expense") {
+        // Check if expense amount exceeds available budget first
+        const totalIncome = getTotalIncome();
+        const totalExpense = getTotalExpense();
+        const totalSaving = getTotalSaving();
+        const availableBudget = totalIncome - totalExpense - totalSaving;
+
+        if (amount > availableBudget) {
+          alert(`Insufficient balance! Available budget: Rs.${availableBudget.toFixed(2)}`);
+          resetForm();
+          return;
+        }
+
         const expenseType = document.getElementById("expense-type").value;
         if (expenseType === "Others") {
           typeValue = document.getElementById("expense-custom-type").value;
           if (!typeValue) {
             alert("Please enter a custom expense type");
+            resetForm();
             return;
           }
         } else {
           typeValue = expenseType;
         }
+      } else if (type === "Saving") {
+        typeValue = "Saving";
       } else {
         alert("Please select a valid category.");
+        resetForm();
         return;
       }
 
       if (!amount || !date || !typeValue) {
         alert("Please provide all required fields.");
+        resetForm();
         return;
       }
 
@@ -143,26 +185,16 @@ if (expenseTypeSelect && expenseCustomType) {
           if (data.message) {
             alert(data.message);
             fetchTransactions();
-
-            // Reset form
-            document.getElementById("amount").value = "";
-            document.getElementById("date").value = "";
-            document.getElementById("expense-type").value = "Rent";
-            document.getElementById("expense-custom-type").value = "";
-            document.getElementById("income-type").value = "Salary";
-            document.getElementById("income-custom-type").value = "";
-            document.getElementById("type").value = "Choose Category";
-            
-            // Hide both type fields
-            incomeTypeDiv.classList.add("hidden");
-            expenseTypeDiv.classList.add("hidden");
-            incomeCustomType.classList.add("hidden");
-            expenseCustomType.classList.add("hidden");
+            resetForm();
           } else {
             alert(data.error || "Error adding transaction");
+            resetForm();
           }
         })
-        .catch((err) => console.error("Error adding transaction:", err));
+        .catch((err) => {
+          console.error("Error adding transaction:", err);
+          resetForm();
+        });
     });
   }
 
@@ -211,23 +243,40 @@ if (expenseTypeSelect && expenseCustomType) {
       .reduce((sum, tx) => sum + parseFloat(tx.amount), 0);
   }
 
-  function updateSummary() {
+  // Add new function to fetch total savings from goals
+  async function fetchTotalSavings() {
+    try {
+      const response = await fetch('Savinggoal.php?action=get_saving_total');
+      const data = await response.json();
+      return data.success ? data.total_saving : 0;
+    } catch (err) {
+      console.error("Error fetching total savings:", err);
+      return 0;
+    }
+  }
+
+  async function updateSummary() {
     const totalIncome = getTotalIncome();
     const totalExpense = getTotalExpense();
     const totalSaving = getTotalSaving();
     const totalBudgetElem = document.getElementById("total-budget");
     const totalAmountElem = document.getElementById("total-amount");
 
-    const totalBudget = totalIncome - totalExpense - totalSaving;
+    // Fetch total savings from goals (same as dashboard.js)
+    const totalGoalSavings = await fetchTotalSavings();
+    console.log("DEBUG: totalGoalSavings from API in Transactions page:", totalGoalSavings);
+
+    // Calculate total budget by subtracting both transaction savings and goal savings
+    const totalBudget = totalIncome - totalExpense - totalGoalSavings;
     
     // Update the summary card
     if (totalBudgetElem) {
-      totalBudgetElem.textContent = `Rs.${totalBudget.toFixed(2)}`;
+      totalBudgetElem.textContent = `Rs.${totalBudget}`;
     }
     
     // Update the table footer
     if (totalAmountElem) {
-      totalAmountElem.textContent = `Rs.${totalBudget.toFixed(2)}`;
+      totalAmountElem.textContent = `Rs.${totalBudget}`;
     }
   }
 
@@ -252,13 +301,21 @@ if (expenseTypeSelect && expenseCustomType) {
   }
 
   function fetchTransactions() {
+    // Fetch regular transactions
     fetch("api.php")
       .then((res) => res.json())
       .then((data) => {
-        console.log("Fetched transactions:", data);
-        transactions = data;
-        renderTransactions();
-        updateSummary();
+        // Fetch saving transactions
+        return fetch("Savinggoal.php?action=get_saving_transactions")
+          .then((res) => res.json())
+          .then((savingData) => {
+            // Combine regular and saving transactions
+            transactions = [...data, ...(savingData.success ? savingData.transactions : [])];
+            // Sort by date in descending order
+            transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+            renderTransactions();
+            updateSummary();
+          });
       })
       .catch((err) => console.error("Error fetching transactions:", err));
   }
